@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:polluted_water_app/main/main_tab_view.dart';
-import 'package:polluted_water_app/main/home_view.dart';
+import 'package:polluted_water_app/main/process_view.dart';
 
 void main() {
   runApp(const MyApp());

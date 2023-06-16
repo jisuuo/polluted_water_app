@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polluted_water_app/component/layout/base_layout.dart';
 import 'package:polluted_water_app/notice/mail_view.dart';
 
 class NoticeView extends StatelessWidget {
@@ -6,11 +7,9 @@ class NoticeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('공지사항'),
-      ),
-      body: Container(
+    return BaseLayout(
+      title: '공지사항',
+      child: Container(
         child: ListView.builder(
           itemCount: 20,
           itemBuilder: (context, index) {
@@ -24,14 +23,6 @@ class NoticeView extends StatelessWidget {
             );
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => MailView(),
-          ));
-        },
-        child: Icon(Icons.mail),
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:polluted_water_app/article/article_view.dart';
+import 'package:polluted_water_app/component/layout/base_layout.dart';
 import 'package:polluted_water_app/food/food_view.dart';
-import 'package:polluted_water_app/main/home_view.dart';
+import 'package:polluted_water_app/main/process_view.dart';
 import 'package:polluted_water_app/notice/notice_view.dart';
 
 class MainTabView extends StatefulWidget {
@@ -10,7 +12,8 @@ class MainTabView extends StatefulWidget {
   State<MainTabView> createState() => _MainTabViewState();
 }
 
-class _MainTabViewState extends State<MainTabView> with TickerProviderStateMixin {
+class _MainTabViewState extends State<MainTabView>
+    with TickerProviderStateMixin {
   int index = 0;
 
   late TabController tabController;
@@ -19,7 +22,7 @@ class _MainTabViewState extends State<MainTabView> with TickerProviderStateMixin
   void initState() {
     // TODO: implement initState
     super.initState();
-    tabController = TabController(length: 5, vsync: this);
+    tabController = TabController(length: 4, vsync: this);
     tabController.addListener(tabListener);
   }
 
@@ -38,26 +41,33 @@ class _MainTabViewState extends State<MainTabView> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: TabBarView(
+    return BaseLayout(
+      child: TabBarView(
         controller: tabController,
         children: [
-          HomeView(),
+          ProcessView(),
+          ArticleView(),
           FoodView(),
           NoticeView(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomSheetNavigatorBar: BottomNavigationBar(
         // bottomNavigatorBar 4개 이상 추가할 때 설정해야하는 요소
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
           tabController.animateTo(index);
         },
         currentIndex: index,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.auto_graph),
+            label: 'process',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.article),
+            label: 'article',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.no_food),
