@@ -97,6 +97,10 @@ class _ArticleViewState extends State<ArticleView>
       child: FutureBuilder(
         future: getArticle(),
         builder: (context, snapshot) {
+          if(!snapshot.hasData) {
+            return CircularProgressIndicator();
+          }
+
           return Swiper(
             itemCount: 5,
             itemBuilder: (BuildContext context, int index) {

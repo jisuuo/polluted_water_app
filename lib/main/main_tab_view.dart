@@ -46,8 +46,8 @@ class _MainTabViewState extends State<MainTabView>
       child: TabBarView(
         controller: tabController,
         children: [
-          MyApp(),
-          //ProcessView(),
+          //MyApp(),
+          ProcessView(),
           ArticleView(),
           FoodView(),
           NoticeView(),
