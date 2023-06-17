@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:polluted_water_app/article/article_view.dart';
+import 'package:polluted_water_app/article/ex.dart';
 import 'package:polluted_water_app/component/layout/base_layout.dart';
 import 'package:polluted_water_app/food/food_view.dart';
 import 'package:polluted_water_app/main/process_view.dart';
@@ -45,7 +46,8 @@ class _MainTabViewState extends State<MainTabView>
       child: TabBarView(
         controller: tabController,
         children: [
-          ProcessView(),
+          MyApp(),
+          //ProcessView(),
           ArticleView(),
           FoodView(),
           NoticeView(),

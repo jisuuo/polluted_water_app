@@ -62,8 +62,9 @@ class _StepperExampleState extends State<StepperExample> {
         iconWidget: Container(
           padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
-              color: Colors.green,
+              color: Colors.redAccent,
               borderRadius: BorderRadius.all(Radius.circular(30))),
+          child: const Icon(Icons.looks_one, color: Colors.white),
         )),
     StepperData(
         title: StepperText("Preparing"),
@@ -73,7 +74,7 @@ class _StepperExampleState extends State<StepperExample> {
           decoration: const BoxDecoration(
               color: Colors.green,
               borderRadius: BorderRadius.all(Radius.circular(30))),
-          child: const Icon(Icons.looks_two, color: Colors.white),
+          child: Center(child: Text('1'))
         )),
     StepperData(
         title: StepperText("On the way"),
@@ -98,58 +99,48 @@ class _StepperExampleState extends State<StepperExample> {
           child: const Icon(Icons.looks_3, color: Colors.white),
         )),
     StepperData(
-        title: StepperText("Delivered",
-            textStyle: const TextStyle(color: Colors.grey)),
+        title: StepperText("On the way"),
+        subtitle: StepperText(
+            "Our delivery executive is on the way to deliver your item"),
         iconWidget: Container(
           padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
-              color: Colors.redAccent,
+              color: Colors.green,
               borderRadius: BorderRadius.all(Radius.circular(30))),
+          child: const Icon(Icons.looks_3, color: Colors.white),
         )),
     StepperData(
-        title: StepperText("Delivered",
-            textStyle: const TextStyle(color: Colors.grey)),
+        title: StepperText("On the way"),
+        subtitle: StepperText(
+            "Our delivery executive is on the way to deliver your item"),
         iconWidget: Container(
           padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
-              color: Colors.redAccent,
+              color: Colors.green,
               borderRadius: BorderRadius.all(Radius.circular(30))),
+          child: const Icon(Icons.looks_3, color: Colors.white),
         )),
     StepperData(
-        title: StepperText("Delivered",
-            textStyle: const TextStyle(color: Colors.grey)),
+        title: StepperText("On the way"),
+        subtitle: StepperText(
+            "Our delivery executive is on the way to deliver your item"),
         iconWidget: Container(
           padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
-              color: Colors.redAccent,
+              color: Colors.green,
               borderRadius: BorderRadius.all(Radius.circular(30))),
+          child: const Icon(Icons.looks_3, color: Colors.white),
         )),
     StepperData(
-        title: StepperText("Delivered",
-            textStyle: const TextStyle(color: Colors.grey)),
+        title: StepperText("On the way"),
+        subtitle: StepperText(
+            "Our delivery executive is on the way to deliver your item"),
         iconWidget: Container(
           padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
-              color: Colors.redAccent,
+              color: Colors.green,
               borderRadius: BorderRadius.all(Radius.circular(30))),
-        )),
-    StepperData(
-        title: StepperText("Delivered",
-            textStyle: const TextStyle(color: Colors.grey)),
-        iconWidget: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-              color: Colors.redAccent,
-              borderRadius: BorderRadius.all(Radius.circular(30))),
-        )),
-    StepperData(
-        title: StepperText("Delivered",
-            textStyle: const TextStyle(color: Colors.grey)),
-        iconWidget: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-              color: Colors.redAccent,
-              borderRadius: BorderRadius.all(Radius.circular(30))),
+          child: const Icon(Icons.looks_3, color: Colors.white),
         )),
   ];
 
@@ -170,10 +161,10 @@ class _StepperExampleState extends State<StepperExample> {
               stepperDirection: Axis.vertical,
               iconWidth: 40,
               iconHeight: 40,
-              activeBarColor: Colors.green,
+              activeBarColor: Colors.redAccent,
               inActiveBarColor: Colors.grey,
               verticalGap: 30,
-              activeIndex: 1,
+              activeIndex: 2,
               barThickness: 8,
             ),
           ],
