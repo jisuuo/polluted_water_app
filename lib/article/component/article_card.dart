@@ -9,12 +9,11 @@ class ArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 130, horizontal: 50),
+      margin: EdgeInsets.symmetric(vertical: 60, horizontal: 50),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
@@ -26,6 +25,7 @@ class ArticleCard extends StatelessWidget {
               Text(description),
             ],
           ),
+          const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

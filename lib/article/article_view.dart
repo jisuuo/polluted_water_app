@@ -4,9 +4,9 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:polluted_water_app/article/component/article_card.dart';
 import 'package:polluted_water_app/component/layout/base_layout.dart';
-import 'package:polluted_water_app/main/model/article_model.dart';
 import 'package:polluted_water_app/notice/mail_view.dart';
 import 'package:http/http.dart' as http;
 import 'package:webview_flutter/webview_flutter.dart';
@@ -60,7 +60,7 @@ class _ArticleViewState extends State<ArticleView>
 
     //print(response);
     //print(response);
-    print(data['items']);
+    //print(data['items']);
     return data['items'];
 
     if (response.statusCode == 200) {
@@ -92,12 +92,18 @@ class _ArticleViewState extends State<ArticleView>
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final currentDay = DateFormat('yyyy/MM/dd')
+        .format(DateTime.parse(now.toString()))
+        .toString();
+    print(currentDay);
+
     return BaseLayout(
-      title: 'article',
+      title: currentDay,
       child: FutureBuilder(
         future: getArticle(),
         builder: (context, snapshot) {
-          if(!snapshot.hasData) {
+          if (!snapshot.hasData) {
             return CircularProgressIndicator();
           }
 
@@ -118,7 +124,7 @@ class _ArticleViewState extends State<ArticleView>
                   //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('이동')));
                 },
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 140),
+                  margin: EdgeInsets.symmetric(vertical: 130),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     color: Colors.grey.withOpacity(0.3),
