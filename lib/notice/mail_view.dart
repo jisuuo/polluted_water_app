@@ -46,13 +46,13 @@ class _MailViewState extends State<MailView> {
       var stream = http.ByteStream(image.openRead());
       var length = await image.length();
 
-      var multipartFile = http.MultipartFile('images', stream, length, filename: image.path);
+      var multipartFile = http.MultipartFile('thumbnail', stream, length, filename: image.path);
       request.files.add(multipartFile);
     }
 
     // 추가 필드 추가
-    request.fields['title'] = title;
-    request.fields['content'] = content;
+    request.fields['data'] = title;
+
 
     var response = await request.send();
 

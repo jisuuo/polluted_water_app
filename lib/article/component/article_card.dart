@@ -9,7 +9,7 @@ class ArticleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 60, horizontal: 50),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

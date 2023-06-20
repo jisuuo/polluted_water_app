@@ -1,27 +1,17 @@
 import 'dart:convert';
 
-import 'package:another_stepper/dto/stepper_data.dart';
-import 'package:another_stepper/widgets/another_stepper.dart';
-import 'package:card_swiper/card_swiper.dart';
-import 'package:cupertino_stepper/cupertino_stepper.dart';
-import 'package:easy_stepper/easy_stepper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:polluted_water_app/component/layout/base_layout.dart';
-import 'package:polluted_water_app/notice/mail_view.dart';
 import 'package:http/http.dart' as http;
 
 class ProcessView extends StatefulWidget {
-  const ProcessView({super.key});
+  const ProcessView({Key? key}) : super(key: key);
 
   @override
   State<ProcessView> createState() => _ProcessViewState();
 }
 
-class _ProcessViewState extends State<ProcessView>
-    with TickerProviderStateMixin {
-
+class _ProcessViewState extends State<ProcessView> {
   Future<List> getProcess() async {
     var url = Uri.parse('https://munaap.kro.kr/api/pollution/v1/main');
 
@@ -34,7 +24,7 @@ class _ProcessViewState extends State<ProcessView>
     var data = json.decode(response.body);
     data = jsonDecode(utf8.decode(response.bodyBytes));
 
-    print(data);
+    //print(data);
 
     return data['data'];
   }
@@ -45,119 +35,73 @@ class _ProcessViewState extends State<ProcessView>
     super.initState();
     getProcess();
   }
+
 
 
   @override
   Widget build(BuildContext context) {
     return BaseLayout(
-      title: 'Process',
-      child: const Center(
-        child: StepperExample(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        child: Icon(
-          Icons.mail,
-        ),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => MailView(),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class StepperExample extends StatefulWidget {
-  const StepperExample({super.key});
-
-  @override
-  State<StepperExample> createState() => _StepperExampleState();
-}
-
-class _StepperExampleState extends State<StepperExample> {
-
-  Future<List> getProcess() async {
-    var url = Uri.parse('https://munaap.kro.kr/api/pollution/v1/main');
-
-    Map<String, String> headers = {
-      'accept': 'application/json',
-      "Content-Type": "application/json",
-    };
-
-    var response = await http.post(url, headers: headers);
-    var data = json.decode(response.body);
-    data = jsonDecode(utf8.decode(response.bodyBytes));
-
-    print(data);
-
-    return data['data'];
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getProcess();
-  }
-
-
-  List<StepperData> stepperData = [
-    StepperData(
-        title: StepperText(
-          "Order Placed",
-          textStyle: const TextStyle(
-            color: Colors.grey,
-          ),
-        ),
-        subtitle: StepperText("Your order has been placed"),
-        iconWidget: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-              color: Colors.redAccent,
-              borderRadius: BorderRadius.all(Radius.circular(30))),
-          child: const Icon(Icons.looks_one, color: Colors.white),
-        )),
-    StepperData(
-        title: StepperText("Preparing"),
-        subtitle: StepperText("Your order is being prepared"),
-        iconWidget: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.all(Radius.circular(30))),
-          child: Center(child: Text('1'))
-        )),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: FutureBuilder(
-          future: getProcess(),
-          builder: (context, snapshot) {
-            return Column(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AnotherStepper(
-                  stepperList: stepperData,
-                  stepperDirection: Axis.vertical,
-                  iconWidth: 40,
-                  iconHeight: 40,
-                  activeBarColor: Colors.redAccent,
-                  inActiveBarColor: Colors.grey,
-                  verticalGap: 30,
-                  activeIndex: 2,
-                  barThickness: 8,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    '후쿠시마 오염수 현황',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ],
-            );
-          },
-        ),
+            ),
+          ),
+          Container(
+            width: 300,
+            height: 300,
+            child: Image.network(
+              'https://i.namu.wiki/i/O9YoCSuRviChM9fPpPosxt4pg7iPrlfD7s_Uf1DTy4uLsc4uirdSetCwyNrG1Z3veGEX6nWf4lfPfavpN3GoLmkxNLFAKBZpQcNZdb6fEQKLIuRY2EKWkhNNz8hIIw_IV2fK2r2Mmg2A42woFRF8hA.webp',
+            ),
+          ),
+          const SizedBox(height: 5),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: FutureBuilder(
+                future: getProcess(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return CircularProgressIndicator();
+                  }
+                  return ListView.separated(
+                    itemBuilder: (context, index) {
+                      final item = snapshot.data![index];
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                        decoration: BoxDecoration(
+                          //color: Colors.grey.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(child: Text(item['mainTitle'])),
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(height: 5),
+                    itemCount: 5,
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

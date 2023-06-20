@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:card_swiper/card_swiper.dart';
@@ -21,6 +22,8 @@ class ArticleView extends StatefulWidget {
 
 class _ArticleViewState extends State<ArticleView>
     with TickerProviderStateMixin {
+  Timer? timer;
+
   final List<String> imgList = [];
 
   Future<List> getArticle() async {
@@ -91,6 +94,17 @@ class _ArticleViewState extends State<ArticleView>
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    if(timer != null) {
+      timer!.cancel();
+    }
+    super.dispose();
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final currentDay = DateFormat('yyyy/MM/dd')
@@ -99,7 +113,6 @@ class _ArticleViewState extends State<ArticleView>
     print(currentDay);
 
     return BaseLayout(
-      title: currentDay,
       child: FutureBuilder(
         future: getArticle(),
         builder: (context, snapshot) {
@@ -107,39 +120,103 @@ class _ArticleViewState extends State<ArticleView>
             return CircularProgressIndicator();
           }
 
-          return Swiper(
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) {
-              final item = snapshot.data![index];
-              return GestureDetector(
-                onTap: () {
-                  String selectedUrl = item['link'];
-                  print(selectedUrl);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WebViewPage(url: selectedUrl),
-                    ),
-                  );
-                  //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('이동')));
-                },
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 130),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    color: Colors.grey.withOpacity(0.3),
-                  ),
-                  child: Container(
-                    child: ArticleCard(
-                      title: item['title'],
-                      description: item['description'],
-                    ),
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          '유효한 링크·정보',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          child: ListView.separated(
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        child: Image.network(
+                                          'https://munaap.kro.kr/api/pollution/v1/item/1.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text('제목'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                              itemCount: 10),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-            viewportFraction: 0.8,
-            scale: 0.9,
+              ),
+              Expanded(
+                child: Swiper(
+                  autoplay: true,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    final item = snapshot.data![index];
+                    return GestureDetector(
+                      onTap: () {
+                        String selectedUrl = item['link'];
+                        print(selectedUrl);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WebViewPage(url: selectedUrl),
+                          ),
+                        );
+                        //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('이동')));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: Colors.grey.withOpacity(0.3),
+                          ),
+                          child: Container(
+                            child: ArticleCard(
+                              title: item['title'],
+                              description: item['description'],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  viewportFraction: 0.8,
+                  scale: 0.9,
+                ),
+              ),
+            ],
           );
         },
       ),

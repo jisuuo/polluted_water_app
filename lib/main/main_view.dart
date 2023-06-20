@@ -56,7 +56,10 @@ class _MainViewState extends State<MainView> {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.3),
+                    border: Border.all(
+                      color: Colors.black,
+                    ),
+                    //color: Colors.grey.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Row(

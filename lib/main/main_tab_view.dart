@@ -47,10 +47,10 @@ class _MainTabViewState extends State<MainTabView>
       child: TabBarView(
         controller: tabController,
         children: [
-          //ProcessView(),
-          MainView(),
-          ArticleView(),
+          ProcessView(),
+          //MainView(),
           FoodView(),
+          ArticleView(),
           NoticeView(),
         ],
       ),
@@ -66,15 +66,15 @@ class _MainTabViewState extends State<MainTabView>
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.auto_graph),
-            label: 'process',
+            label: '현황',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.no_food),
+            label: '식품',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.article),
             label: 'article',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.no_food),
-            label: 'food',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.mail),
