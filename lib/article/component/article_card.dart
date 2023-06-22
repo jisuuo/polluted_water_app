@@ -25,7 +25,7 @@ class ArticleCard extends StatelessWidget {
               Text(description),
             ],
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

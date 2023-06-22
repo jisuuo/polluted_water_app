@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:polluted_water_app/component/layout/base_layout.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:polluted_water_app/mail/model/data_model.dart';
+
 
 class MailView extends StatefulWidget {
   const MailView({Key? key}) : super(key: key);
@@ -39,20 +43,33 @@ class _MailViewState extends State<MailView> {
 
   Future<void> uploadImagesToServer(List<File> images) async {
     var url = Uri.parse('https://munaap.kro.kr/api/pollution/v1/report');
-
     var request = http.MultipartRequest('POST', url);
 
     for (var image in images) {
-      var stream = http.ByteStream(image.openRead());
-      var length = await image.length();
+      var resizedImage = await compressImage(image); // 이미지 리사이징
+      var stream = http.ByteStream(Stream.fromIterable([resizedImage!.toList()]));
 
-      var multipartFile = http.MultipartFile('thumbnail', stream, length, filename: image.path);
+      var length = resizedImage.length;
+
+      var multipartFile = http.MultipartFile(
+        'thumbnail',
+        stream,
+        length,
+        filename: image.path,
+      );
       request.files.add(multipartFile);
     }
 
-    // 추가 필드 추가
-    request.fields['data'] = title;
+    // 데이터 직렬화
+    var dataMap = {
+      "content": content,
+      "title": title,
+    };
+    var jsonData = json.encode(dataMap);
 
+    // 추가 필드 추가
+    //request.headers['Content-Type'] = 'application/json';
+    request.fields['data'] = jsonData;
 
     var response = await request.send();
 
@@ -66,6 +83,15 @@ class _MailViewState extends State<MailView> {
           .showSnackBar(SnackBar(content: Text('이미지 업로드 실패')));
     }
   }
+
+  Future<Uint8List?> compressImage(File imageFile) async {
+    var compressedImage = await FlutterImageCompress.compressWithFile(
+      imageFile.path,
+      quality: 80, // 리사이징된 이미지의 품질 설정
+    );
+    return compressedImage;
+  }
+
 
   Future<void> getSend() async {
     String url = 'https://munaap.kro.kr/api/pollution/v1/report';
@@ -115,7 +141,7 @@ class _MailViewState extends State<MailView> {
     return BaseLayout(
       title: '제보하기',
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: Column(
           children: [
             Expanded(
@@ -125,11 +151,11 @@ class _MailViewState extends State<MailView> {
                   children: [
                     Container(
                       width: double.infinity,
-                      height: 50,
+                      height: 30,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('제보해주신 내용 토대로 확인 후 업로드하여 공유해드리겠습니다.'),
+                          Text('* 제보해주신 내용 토대로 확인 후 업로드하여드 공유해드리겠습니다.', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
                         ],
                       ),
                     ),

@@ -48,7 +48,7 @@ class _MainViewState extends State<MainView> {
           future: getProcess(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
             return ListView.separated(
               itemBuilder: (context, index) {

@@ -28,6 +28,7 @@ class BaseLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       drawer: drawer,
       backgroundColor: backgroundColor ?? Colors.white,
       appBar: renderAppBar(),

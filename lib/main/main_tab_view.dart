@@ -74,7 +74,7 @@ class _MainTabViewState extends State<MainTabView>
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.article),
-            label: 'article',
+            label: '기사',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.mail),

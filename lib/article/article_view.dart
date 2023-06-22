@@ -152,7 +152,8 @@ class _ArticleViewState extends State<ArticleView>
                                       Container(
                                         width: 50,
                                         height: 50,
-                                        child: Image.network(
+                                        child:
+                                        Image.network(
                                           'https://munaap.kro.kr/api/pollution/v1/item/1.png',
                                           fit: BoxFit.cover,
                                         ),
