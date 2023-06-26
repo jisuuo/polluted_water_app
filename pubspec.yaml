@@ -55,6 +55,7 @@ dependencies:
   flutter_native_splash: ^2.2.0+1
   html: ^0.15.4
   flutter_image_compress: ^2.0.3
+  file_picker: ^5.2.10
 
 
 dev_dependencies:

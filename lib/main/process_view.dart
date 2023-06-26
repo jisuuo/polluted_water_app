@@ -71,13 +71,13 @@ class _ProcessViewState extends State<ProcessView> {
                   ],
                 ),
               ),
-              Container(
-                width: 250,
-                height: 250,
-                child: Image.network(
-                  'https://i.namu.wiki/i/O9YoCSuRviChM9fPpPosxt4pg7iPrlfD7s_Uf1DTy4uLsc4uirdSetCwyNrG1Z3veGEX6nWf4lfPfavpN3GoLmkxNLFAKBZpQcNZdb6fEQKLIuRY2EKWkhNNz8hIIw_IV2fK2r2Mmg2A42woFRF8hA.webp',
-                ),
-              ),
+              // Container(
+              //   width: 250,
+              //   height: 250,
+              //   // child: Image.network(
+              //   //   'https://i.namu.wiki/i/O9YoCSuRviChM9fPpPosxt4pg7iPrlfD7s_Uf1DTy4uLsc4uirdSetCwyNrG1Z3veGEX6nWf4lfPfavpN3GoLmkxNLFAKBZpQcNZdb6fEQKLIuRY2EKWkhNNz8hIIw_IV2fK2r2Mmg2A42woFRF8hA.webp',
+              //   // ),
+              // ),
               const SizedBox(height: 5),
               Expanded(
                 child: Swiper(
